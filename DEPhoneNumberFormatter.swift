@@ -35,7 +35,7 @@ class DEPhoneNumberFormatter {
    
    func formattedPhoneNumber(_ phoneNumber: String) -> String {
       var formattedPhone = clearPhoneNumber(phoneNumber)
-      let length = formattedPhone.characters.count
+      let length = formattedPhone.count
       if length > 10 {
          return formattedPhone
       }
@@ -54,7 +54,7 @@ class DEPhoneNumberFormatter {
       return formattedPhone
    }
    
-   private func clearPhoneNumber(_ phoneNumber: String) -> String {
+   fileprivate func clearPhoneNumber(_ phoneNumber: String) -> String {
       var clearPhoneNumber = phoneNumber.replacingOccurrences(of: " ", with: "")
       clearPhoneNumber = clearPhoneNumber.replacingOccurrences(of: "(", with: "")
       clearPhoneNumber = clearPhoneNumber.replacingOccurrences(of: ")", with: "")
@@ -64,7 +64,7 @@ class DEPhoneNumberFormatter {
       return clearPhoneNumber
    }
    
-   private func formattedPhoneNumberNANP(_ phoneNumber: String, length: Int) -> String {
+   fileprivate func formattedPhoneNumberNANP(_ phoneNumber: String, length: Int) -> String {
       var formattedPhone = phoneNumber
       
       if length > 0 {
@@ -80,7 +80,7 @@ class DEPhoneNumberFormatter {
       return formattedPhone
    }
    
-   private func formattedPhoneNumberOther(_ phoneNumber: String, length: Int) -> String {
+   fileprivate func formattedPhoneNumberOther(_ phoneNumber: String, length: Int) -> String {
       var formattedPhone = phoneNumber
       
       if length > 0 {
@@ -103,7 +103,7 @@ class DEPhoneNumberFormatter {
 extension String {
    
    func insert(_ string: String, index: Int) -> String {
-      return String(characters.prefix(index)) + string + String(characters.suffix(characters.count - index))
+      return String(prefix(index)) + string + String(suffix(count - index))
    }
    
    func isNumber() -> Bool {
