@@ -1,10 +1,12 @@
 import Foundation
 
 enum FormatType {
-   case Custom
-   case Default
-   case NANP
-   case Other
+   
+   case custom
+   
+   case nanp
+   
+   case other
 }
 
 class DEPhoneNumberFormatter {
@@ -14,47 +16,28 @@ class DEPhoneNumberFormatter {
    var formatType: FormatType {
       get {
          if customFormat != nil {
-            return .Custom
+            return .custom
          }
          
          let countryCode = (Locale.current as NSLocale).object(forKey: NSLocale.Key.countryCode) as? String ?? "US"
          
          let arrayNANP = ["AS", "AI", "AG", "BS", "BB", "BM", "VG", "CA", "KY", "DM", "DO", "GD", "GU", "JM", "MS", "MP", "PR", "KN", "LC", "VC", "SX", "TT", "TC", "US", "VI"]
          if arrayNANP.contains(countryCode) {
-            return .NANP
+            return .nanp
          }
          
          let arrayOther = ["RU", "UA"]
          if arrayOther.contains(countryCode) {
-            return .Other
+            return .other
          }
          
-         return .Default
+         return .custom
       }
    }
    
-   func formattedPhoneNumber(_ phoneNumber: String) -> String {
-      var formattedPhone = clearPhoneNumber(phoneNumber)
-      let length = formattedPhone.count
-      if length > 10 {
-         return formattedPhone
-      }
-      
-      switch formatType {
-      case .Custom:
-         formattedPhone = phoneNumber
-      case .Default:
-         formattedPhone = phoneNumber
-      case .NANP:
-         formattedPhone = formattedPhoneNumberNANP(formattedPhone, length: length)
-      case .Other:
-         formattedPhone = formattedPhoneNumberOther(formattedPhone, length: length)
-      }
-      
-      return formattedPhone
-   }
+   // MARK: -
    
-   fileprivate func clearPhoneNumber(_ phoneNumber: String) -> String {
+   private func clearPhoneNumber(_ phoneNumber: String) -> String {
       var clearPhoneNumber = phoneNumber.replacingOccurrences(of: " ", with: "")
       clearPhoneNumber = clearPhoneNumber.replacingOccurrences(of: "(", with: "")
       clearPhoneNumber = clearPhoneNumber.replacingOccurrences(of: ")", with: "")
@@ -64,7 +47,7 @@ class DEPhoneNumberFormatter {
       return clearPhoneNumber
    }
    
-   fileprivate func formattedPhoneNumberNANP(_ phoneNumber: String, length: Int) -> String {
+   private func formattedPhoneNumberNANP(_ phoneNumber: String, length: Int) -> String {
       var formattedPhone = phoneNumber
       
       if length > 0 {
@@ -80,7 +63,7 @@ class DEPhoneNumberFormatter {
       return formattedPhone
    }
    
-   fileprivate func formattedPhoneNumberOther(_ phoneNumber: String, length: Int) -> String {
+   private func formattedPhoneNumberOther(_ phoneNumber: String, length: Int) -> String {
       var formattedPhone = phoneNumber
       
       if length > 0 {
@@ -94,6 +77,27 @@ class DEPhoneNumberFormatter {
       }
       if length > 8 {
          formattedPhone = formattedPhone.insert(" ", index: 12)
+      }
+      
+      return formattedPhone
+   }
+   
+   // MARK: -
+   
+   func formattedPhoneNumber(_ phoneNumber: String) -> String {
+      var formattedPhone = clearPhoneNumber(phoneNumber)
+      let length = formattedPhone.count
+      if length > 10 {
+         return formattedPhone
+      }
+      
+      switch formatType {
+      case .custom:
+         formattedPhone = phoneNumber
+      case .nanp:
+         formattedPhone = formattedPhoneNumberNANP(formattedPhone, length: length)
+      case .other:
+         formattedPhone = formattedPhoneNumberOther(formattedPhone, length: length)
       }
       
       return formattedPhone
@@ -115,10 +119,10 @@ extension String {
    }
    
    func isNumberOrEmpty() -> Bool {
-      if self.isEmpty {
+      if isEmpty {
          return true
       }
       
-      return self.isNumber()
+      return isNumber()
    }
 }
