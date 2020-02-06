@@ -2,11 +2,18 @@ import UIKit
 
 class ViewController: UIViewController {
    
+   @IBOutlet weak var textField: DEPhoneNumberTextField?
+   
+   // MARK: -
+   
    override func viewDidLoad() {
       super.viewDidLoad()
       
+      textField?.setup()
       performPhoneNumberFormatterTest()
    }
+   
+   // MARK: -
    
    private func performPhoneNumberFormatterTest() {
       let phoneNumberFormatter = DEPhoneNumberFormatter()
