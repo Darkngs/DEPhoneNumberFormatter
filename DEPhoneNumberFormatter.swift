@@ -1,6 +1,6 @@
 import Foundation
 
-enum FormatType {
+public enum DEPhoneNumberFormat {
    
    case custom
    
@@ -9,11 +9,11 @@ enum FormatType {
    case other
 }
 
-class DEPhoneNumberFormatter {
+public class DEPhoneNumberFormatter {
    
-   var customFormat: String?
+   public var customFormat: String?
    
-   var formatType: FormatType {
+   public var formatType: DEPhoneNumberFormat {
       get {
          if customFormat != nil {
             return .custom
@@ -47,7 +47,7 @@ class DEPhoneNumberFormatter {
       return clearPhoneNumber
    }
    
-   private func formattedPhoneNumberNANP(_ phoneNumber: String, length: Int) -> String {
+   private func numberNANP(from phoneNumber: String, length: Int) -> String {
       var formattedPhone = phoneNumber
       
       if length > 0 {
@@ -63,7 +63,7 @@ class DEPhoneNumberFormatter {
       return formattedPhone
    }
    
-   private func formattedPhoneNumberOther(_ phoneNumber: String, length: Int) -> String {
+   private func numberOther(from phoneNumber: String, length: Int) -> String {
       var formattedPhone = phoneNumber
       
       if length > 0 {
@@ -84,7 +84,7 @@ class DEPhoneNumberFormatter {
    
    // MARK: -
    
-   func formattedPhoneNumber(_ phoneNumber: String) -> String {
+   public func number(from phoneNumber: String) -> String {
       var formattedPhone = clearPhoneNumber(phoneNumber)
       let length = formattedPhone.count
       if length > 10 {
@@ -95,34 +95,18 @@ class DEPhoneNumberFormatter {
       case .custom:
          formattedPhone = phoneNumber
       case .nanp:
-         formattedPhone = formattedPhoneNumberNANP(formattedPhone, length: length)
+         formattedPhone = numberNANP(from: formattedPhone, length: length)
       case .other:
-         formattedPhone = formattedPhoneNumberOther(formattedPhone, length: length)
+         formattedPhone = numberOther(from: formattedPhone, length: length)
       }
       
       return formattedPhone
    }
 }
 
-extension String {
+private extension String {
    
    func insert(_ string: String, index: Int) -> String {
       return String(prefix(index)) + string + String(suffix(count - index))
-   }
-   
-   func isNumber() -> Bool {
-      if Int(self) == nil {
-         return false
-      }
-      
-      return true
-   }
-   
-   func isNumberOrEmpty() -> Bool {
-      if isEmpty {
-         return true
-      }
-      
-      return isNumber()
    }
 }

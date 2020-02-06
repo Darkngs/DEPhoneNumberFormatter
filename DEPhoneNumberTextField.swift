@@ -1,14 +1,14 @@
 import UIKit
 
-class DEPhoneNumberTextField: UITextField {
+public class DEPhoneNumberTextField: UITextField {
    
    private var shouldFormatPhoneNumber: Bool = true
    
    private weak var hiddenDelegate: UITextFieldDelegate?
    
-   var phoneNumberFormatter = DEPhoneNumberFormatter()
+   public var phoneNumberFormatter = DEPhoneNumberFormatter()
    
-   override var delegate: UITextFieldDelegate? {
+   override public var delegate: UITextFieldDelegate? {
       didSet {
          if delegate?.isKind(of: DEPhoneNumberTextField.self) == false {
             hiddenDelegate = delegate
@@ -21,7 +21,7 @@ class DEPhoneNumberTextField: UITextField {
    
    @objc private func textFieldEditingChanged(_ textField: UITextField) {
       if shouldFormatPhoneNumber {
-         let formattedText = phoneNumberFormatter.formattedPhoneNumber(textField.text ?? "")
+         let formattedText = phoneNumberFormatter.number(from: textField.text ?? "")
          if !formattedText.isEmpty {
             textField.text = formattedText
          }
@@ -32,14 +32,17 @@ class DEPhoneNumberTextField: UITextField {
    
    // MARK: -
    
-   func setup() {
+   public func setup() {
+      if delegate == nil {
+         delegate = self
+      }
       addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
    }
 }
 
 extension DEPhoneNumberTextField: UITextFieldDelegate {
    
-   func textFieldDidBeginEditing(_ textField: UITextField) {
+   public func textFieldDidBeginEditing(_ textField: UITextField) {
       shouldFormatPhoneNumber = false
       
       guard let text = textField.text else {
@@ -51,7 +54,7 @@ extension DEPhoneNumberTextField: UITextFieldDelegate {
       }
    }
    
-   func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+   public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
       if shouldFormatPhoneNumber {
          if !string.isNumberOrEmpty() {
             shouldFormatPhoneNumber = false
@@ -61,7 +64,26 @@ extension DEPhoneNumberTextField: UITextFieldDelegate {
       return true
    }
    
-   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+   public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
       return hiddenDelegate?.textFieldShouldReturn?(textField) ?? false
+   }
+}
+
+private extension String {
+   
+   func isNumber() -> Bool {
+      if Int(self) == nil {
+         return false
+      }
+      
+      return true
+   }
+   
+   func isNumberOrEmpty() -> Bool {
+      if isEmpty {
+         return true
+      }
+      
+      return isNumber()
    }
 }

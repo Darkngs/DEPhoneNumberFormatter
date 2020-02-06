@@ -15,17 +15,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Phone" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="w1j-dG-eoc" customClass="DEPhoneNumberTextField" customModule="DEPhoneNumberFormatter" customModuleProvider="target">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="w1j-dG-eoc" customClass="DEPhoneNumberTextField" customModule="DEPhoneNumberFormatter" customModuleProvider="target">
                                 <rect key="frame" x="79" y="298" width="256" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="4Ht-2I-KUl"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="256" id="L34-Ca-eDj"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no" textContentType="tel"/>
-                                <connections>
-                                    <outlet property="delegate" destination="BYZ-38-t0r" id="Dc6-h6-MN3"/>
-                                </connections>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
                             </textField>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
