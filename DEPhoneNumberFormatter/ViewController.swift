@@ -17,15 +17,15 @@ class ViewController: UIViewController {
    
    private func performPhoneNumberFormatterTest() {
       let phoneNumberFormatter = DEPhoneNumberFormatter()
-      print(phoneNumberFormatter.formattedPhoneNumber("1"))
-      print(phoneNumberFormatter.formattedPhoneNumber("12"))
-      print(phoneNumberFormatter.formattedPhoneNumber("123"))
-      print(phoneNumberFormatter.formattedPhoneNumber("1234"))
-      print(phoneNumberFormatter.formattedPhoneNumber("12345"))
-      print(phoneNumberFormatter.formattedPhoneNumber("123456"))
-      print(phoneNumberFormatter.formattedPhoneNumber("1234567"))
-      print(phoneNumberFormatter.formattedPhoneNumber("12345678"))
-      print(phoneNumberFormatter.formattedPhoneNumber("123456789"))
-      print(phoneNumberFormatter.formattedPhoneNumber("1234567890"))
+      print(phoneNumberFormatter.number(from: "1"))
+      print(phoneNumberFormatter.number(from: "12"))
+      print(phoneNumberFormatter.number(from: "123"))
+      print(phoneNumberFormatter.number(from: "1234"))
+      print(phoneNumberFormatter.number(from: "12345"))
+      print(phoneNumberFormatter.number(from: "123456"))
+      print(phoneNumberFormatter.number(from: "1234567"))
+      print(phoneNumberFormatter.number(from: "12345678"))
+      print(phoneNumberFormatter.number(from: "123456789"))
+      print(phoneNumberFormatter.number(from: "1234567890"))
    }
 }
