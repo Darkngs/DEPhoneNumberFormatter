@@ -37,16 +37,6 @@ public class DEPhoneNumberFormatter {
    
    // MARK: -
    
-   private func clearPhoneNumber(_ phoneNumber: String) -> String {
-      var clearPhoneNumber = phoneNumber.replacingOccurrences(of: " ", with: "")
-      clearPhoneNumber = clearPhoneNumber.replacingOccurrences(of: "(", with: "")
-      clearPhoneNumber = clearPhoneNumber.replacingOccurrences(of: ")", with: "")
-      clearPhoneNumber = clearPhoneNumber.replacingOccurrences(of: "-", with: "")
-      clearPhoneNumber = clearPhoneNumber.replacingOccurrences(of: "+", with: "")
-      
-      return clearPhoneNumber
-   }
-   
    private func numberNANP(from phoneNumber: String, length: Int) -> String {
       var formattedPhone = phoneNumber
       
@@ -84,8 +74,15 @@ public class DEPhoneNumberFormatter {
    
    // MARK: -
    
+   public func clearNumber(_ phoneNumber: String) -> String {
+      let numbers = Set("0123456789")
+      return phoneNumber.filter {
+         numbers.contains($0)
+      }
+   }
+   
    public func number(from phoneNumber: String) -> String {
-      var formattedPhone = clearPhoneNumber(phoneNumber)
+      var formattedPhone = clearNumber(phoneNumber)
       let length = formattedPhone.count
       if length > 10 {
          return formattedPhone

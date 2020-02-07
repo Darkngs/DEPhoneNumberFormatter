@@ -2,7 +2,7 @@ import UIKit
 
 public class DEPhoneNumberTextField: UITextField {
    
-   private var shouldFormatPhoneNumber: Bool = true
+   private var shouldFormatNumber: Bool = true
    
    private weak var hiddenDelegate: UITextFieldDelegate?
    
@@ -20,13 +20,13 @@ public class DEPhoneNumberTextField: UITextField {
    // MARK: -
    
    @objc private func textFieldEditingChanged(_ textField: UITextField) {
-      if shouldFormatPhoneNumber {
+      if shouldFormatNumber {
          let formattedText = phoneNumberFormatter.number(from: textField.text ?? "")
          if !formattedText.isEmpty {
             textField.text = formattedText
          }
       } else if textField.text?.isEmpty == true {
-         shouldFormatPhoneNumber = true
+         shouldFormatNumber = true
       }
    }
    
@@ -43,23 +43,24 @@ public class DEPhoneNumberTextField: UITextField {
 extension DEPhoneNumberTextField: UITextFieldDelegate {
    
    public func textFieldDidBeginEditing(_ textField: UITextField) {
-      shouldFormatPhoneNumber = false
+      shouldFormatNumber = false
       
       guard let text = textField.text else {
          return
       }
       
       if text.isNumberOrEmpty() {
-         shouldFormatPhoneNumber = true
+         shouldFormatNumber = true
       }
    }
    
    public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-      if shouldFormatPhoneNumber {
-         if !string.isNumberOrEmpty() {
-            shouldFormatPhoneNumber = false
-         }
+      guard string.isNumberOrEmpty() else {
+         shouldFormatNumber = false
+         return false
       }
+      
+      shouldFormatNumber = true
       
       return true
    }
