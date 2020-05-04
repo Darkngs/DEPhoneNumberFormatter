@@ -37,6 +37,12 @@ public class DEPhoneNumberFormatter {
    
    // MARK: -
    
+   public init() {
+      
+   }
+   
+   // MARK: -
+   
    private func numberNANP(from phoneNumber: String, length: Int) -> String {
       var formattedPhone = phoneNumber
       
